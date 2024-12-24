@@ -27,4 +27,6 @@ public:
 	void modifityEvent();
 	void informationEvent();
 	void createdEventNameInformation();
+	bool validateID(string id);
+	void inputIDs(string ids[], int maxIDs);
 };

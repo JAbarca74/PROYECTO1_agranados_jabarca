@@ -31,6 +31,46 @@ void MainMenu::cleanScreen()
 #endif
 }
 
+bool validateID(string id) {
+	if (id.length() != 9) {
+		cout << "La cedula de identidad tiene que ser de '9' digitos." << endl;
+		return false;
+	}
+	if (id[0] < '1' || id[0] > '8') {
+		cout << "Ingrese su cedula de identidad correctamente." << endl;
+		return false;
+	}
+	if (id[5] != '0') {
+		cout << "Ingrese su cedula de identidad correctamente." << endl;
+		return false;
+	}
+	for (int i = 0; i < id.length(); i++) { //https://docs.vultr.com/cpp/standard-library/cctype/isdigit
+		if (!isdigit(id[i])) { // en el link me aparecio, tambien es para lo de ir haciendo la documentacion y poner bastantes cosas en la bibliografia
+			cout << "Su cedula de identidad tiene que contener unicamente numeros." << endl;
+			return false;
+		}
+	}
+	return true;
+} 
+
+void inputIDs(string ids[], int maxIDs) {
+	string id;
+	int count = 0;
+
+	while (count < maxIDs) {
+		cout << "Ingrese su cedula de identidad:\n ";
+		cin >> id;
+
+		if (validateID(id)) {
+			ids[count] = id;
+			count++;
+		}
+		else {
+			cout << "Cedula invalida. Por favor, intente nuevamente." << endl;
+		}
+	}
+} 
+
 void MainMenu::informationMenu()
 {
 	cleanScreen();
