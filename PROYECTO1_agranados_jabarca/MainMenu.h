@@ -29,4 +29,5 @@ public:
 	void createdEventNameInformation();
 	bool validateID(string id);
 	void inputIDs(string ids[], int maxIDs);
+	void askForDate();
 };

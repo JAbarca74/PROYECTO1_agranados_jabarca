@@ -31,7 +31,9 @@ void MainMenu::cleanScreen()
 #endif
 }
 
-bool validateID(string id) {
+//para la validacion de cedulas. 
+
+bool MainMenu::validateID(string id) {
 	if (id.length() != 9) {
 		cout << "La cedula de identidad tiene que ser de '9' digitos." << endl;
 		return false;
@@ -52,8 +54,7 @@ bool validateID(string id) {
 	}
 	return true;
 } 
-
-void inputIDs(string ids[], int maxIDs) {
+void MainMenu::inputIDs(string ids[], int maxIDs) {
 	string id;
 	int count = 0;
 
@@ -70,6 +71,66 @@ void inputIDs(string ids[], int maxIDs) {
 		}
 	}
 } 
+
+//para la validacion de fechas. 
+
+void askForDate() {
+	string date;
+	bool flag = false;
+
+	while (!flag) {
+		cleanScreen();
+		cout << "Ingrese su fecha de nacimiento (formato DD/MM/YYYY): ";
+		cin >> date;
+
+		char dateNumbers[9];
+		int aux = 0;
+
+
+		for (int i = 0; date[i] != '\0'; i++) {
+			if (isdigit(date[i])) {
+				dateNumbers[aux++] = date[i];
+			}
+		}
+		dateNumbers[aux] = '\0';
+
+		if (aux != 8) {
+			cout << "La fecha debe contener exactamente 8 digitos en el formato DDMMYYYY." << endl;
+		}
+		else {
+			int day = (dateNumbers[0] - '0') * 10 + (dateNumbers[1] - '0');
+			int month = (dateNumbers[2] - '0') * 10 + (dateNumbers[3] - '0');
+			int year = (dateNumbers[4] - '0') * 1000 + (dateNumbers[5] - '0') * 100 + (dateNumbers[6] - '0') * 10 + (dateNumbers[7] - '0');
+			int daysInMonth[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+			if (year > 2009) {
+				cout << "Debe ser mayor de 15 años para comprar boletos." << endl;
+			}
+			else if (year < 1925) {
+				cout << "El año debe ser mayor o igual a 1925. Ingrese una fecha válida." << endl;
+			}
+			else if (month < 1 || month > 12) {
+				cout << "El mes debe estar entre 1 y 12." << endl;
+			}
+			else if (day < 1 || day > daysInMonth[month - 1]) {
+				cout << "El dia no es valido para el mes ingresado." << endl;
+			}
+			else {
+				cout << "Fecha valida." << endl;
+				flag = true;
+			}
+		}
+
+		if (!flag) {
+			cout << "Fecha invalida. Intente nuevamente." << endl;
+			cout << "Presione 'Enter' para continuar..." << endl;
+			cin.ignore();
+			cin.get();
+			// https://www.minich.com/education/wyo/cplusplus/cplusplusch10/getfunction.htm
+			// Para la bibliografia
+		}
+	}
+}
 
 void MainMenu::informationMenu()
 {
