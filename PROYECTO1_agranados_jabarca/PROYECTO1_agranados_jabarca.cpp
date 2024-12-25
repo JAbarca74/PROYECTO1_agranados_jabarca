@@ -74,7 +74,7 @@ void MainMenu::inputIDs(string ids[], int maxIDs) {
 
 //para la validacion de fechas. 
 
-void askForDate() {
+void MainMenu::askForDate() {
 	string date;
 	bool flag = false;
 
