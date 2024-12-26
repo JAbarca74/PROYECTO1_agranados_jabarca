@@ -5,7 +5,7 @@ MainMenu::MainMenu()
 	browser = 0;
 	interact = 0;
 	ptr = &interact;
-	arrayName = new int(0);
+	arrayName = new int(size); 
 	nameEvent = " ";
 	dateEvent = " ";
 	id = " "; 
@@ -13,7 +13,7 @@ MainMenu::MainMenu()
 	segmentsEvent = 0;
 }
 
-MainMenu::MainMenu() {
+MainMenu::~MainMenu(){
 	delete arrayName; 
 }
 
@@ -43,7 +43,6 @@ void MainMenu::pauseScreen() {
 } 
 
 //para la validacion de cedulas.  
-
 void MainMenu::validateID() {
 	string id;
 	bool flag = false;
@@ -103,7 +102,6 @@ void MainMenu::validateID() {
 }
 
 //para la validacion de fechas. 
-
 void MainMenu::askForDate(string dateEvent) {
 	bool flag = false;
 
