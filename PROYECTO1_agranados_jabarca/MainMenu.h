@@ -12,6 +12,7 @@ private:
 	int* arrayName;
 	string nameEvent;
 	string dateEvent;
+	string id;
 	int seatingEvent;
 	int segmentsEvent;
 
@@ -27,7 +28,6 @@ public:
 	void modifityEvent();
 	void informationEvent();
 	void createdEventNameInformation();
-	bool validateID(string id);
-	void inputIDs(string ids[], int maxIDs);
-	void askForDate();
+	void validateID();
+	void askForDate(string dateEvent);
 };

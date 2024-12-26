@@ -5,11 +5,16 @@ MainMenu::MainMenu()
 	browser = 0;
 	interact = 0;
 	ptr = &interact;
-	arrayName = new int(NULL);
+	arrayName = new int(0);
 	nameEvent = " ";
 	dateEvent = " ";
+	id = " "; 
 	seatingEvent = 0;
 	segmentsEvent = 0;
+}
+
+MainMenu::MainMenu() {
+	delete arrayName; 
 }
 
 int MainMenu::getBrowser()
@@ -31,65 +36,89 @@ void MainMenu::cleanScreen()
 #endif
 }
 
-//para la validacion de cedulas. 
-
-bool MainMenu::validateID(string id) {
-	if (id.length() != 9) {
-		cout << "La cedula de identidad tiene que ser de '9' digitos." << endl;
-		return false;
-	}
-	if (id[0] < '1' || id[0] > '8') {
-		cout << "Ingrese su cedula de identidad correctamente." << endl;
-		return false;
-	}
-	if (id[5] != '0') {
-		cout << "Ingrese su cedula de identidad correctamente." << endl;
-		return false;
-	}
-	for (int i = 0; i < id.length(); i++) { //https://docs.vultr.com/cpp/standard-library/cctype/isdigit
-		if (!isdigit(id[i])) { // en el link me aparecio, tambien es para lo de ir haciendo la documentacion y poner bastantes cosas en la bibliografia
-			cout << "Su cedula de identidad tiene que contener unicamente numeros." << endl;
-			return false;
-		}
-	}
-	return true;
+void MainMenu::pauseScreen() { 
+	cout << "\nIngrese cualquier tecla para continuar.....";
+	string aux= " ";
+	cin >> aux;
 } 
-void MainMenu::inputIDs(string ids[], int maxIDs) {
-	string id;
-	int count = 0;
 
-	while (count < maxIDs) {
-		cout << "Ingrese su cedula de identidad:\n ";
+//para la validacion de cedulas.  
+
+void MainMenu::validateID() {
+	string id;
+	bool flag = false;
+	int size = 0;
+	string idClean = " ";
+
+	while (!flag) {
+		cleanScreen();
+		cout << " Nota: Para poder ingresar su cedula de identidad correctamente tiene que\n";
+		cout << "contener '9' numeros en formato '123450678' sin espacios u otros caracteres.\n";
+		cout << "\n\t\tIngrese su cedula de identidad: ";
 		cin >> id;
 
-		if (validateID(id)) {
-			ids[count] = id;
-			count++;
+		for (int i = 0; id[i] != '\0'; i++) {
+			if (id[i] != ' ') {
+				idClean += id[i];
+			}
 		}
-		else {
-			cout << "Cedula invalida. Por favor, intente nuevamente." << endl;
+
+		if (idClean.length() != 9) {
+			cleanScreen();
+			cout << "La cedula de identidad debe contener exactamente 9 digitos." << endl;
+			pauseScreen();
+			continue;
 		}
+
+		if (idClean[0] < '1' || idClean[0] > '8') {
+			cleanScreen();
+			cout << "La cedula debe comenzar con un digito entre 1 y 8." << endl;
+			pauseScreen();
+			continue;
+		}
+
+		if (idClean[5] != '0') {
+			cleanScreen();
+			cout << "El sexto digito de la cedula debe ser '0'." << endl;
+			pauseScreen();
+			continue;
+		}
+
+		bool allDigits = true;
+		for (int i = 0; i < idClean.length(); i++) {
+			if (idClean[i] < '0' || idClean[i] > '9') {
+				allDigits = false;
+				break;
+			}
+		}
+		if (!allDigits) {
+			cleanScreen();
+			cout << "La cedula solo debe contener numeros." << endl;
+			pauseScreen();
+			continue;
+		}
+		flag = true;
+		cout << "Su cedula de identificacion se cargo correctamente." << endl;
 	}
-} 
+}
 
 //para la validacion de fechas. 
 
-void MainMenu::askForDate() {
-	string date;
+void MainMenu::askForDate(string dateEvent) {
 	bool flag = false;
 
 	while (!flag) {
 		cleanScreen();
 		cout << "Ingrese su fecha de nacimiento (formato DD/MM/YYYY): ";
-		cin >> date;
+		cin >> dateEvent;
 
 		char dateNumbers[9];
 		int aux = 0;
 
 
-		for (int i = 0; date[i] != '\0'; i++) {
-			if (isdigit(date[i])) {
-				dateNumbers[aux++] = date[i];
+		for (int i = 0; dateEvent[i] != '\0'; i++) {
+			if (isdigit(dateEvent[i])) {
+				dateNumbers[aux++] = dateEvent[i];
 			}
 		}
 		dateNumbers[aux] = '\0';
